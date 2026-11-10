@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>¡Golazo de Tildes! El campeonato de las palabras</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ESTADIO 3D DE FONDO -->
+<div id="stadium" aria-hidden="true">
+  <div class="lights"><span></span><span></span><span></span><span></span></div>
+  <div class="stands"></div>
+  <div class="field3d">
+    <div class="field-lines"><div class="mid"></div><div class="circle"></div><div class="area a1"></div><div class="area a2"></div></div>
+  </div>
+</div>
+
+<main id="app">
+
+  <!-- PANTALLA 1: INGRESO -->
+  <section id="screen-login" class="screen active">
+    <div class="login-wrap">
+      <div class="login-hero">
+        <h1 class="logo3d"><span class="l1">¡GOLAZO</span><span class="l2">DE TILDES!</span></h1>
+        <div class="logo-sub">EL CAMPEONATO DE LAS PALABRAS</div>
+        <div class="hero-scene">
+          <div id="login-mascot" class="mascot-big"></div>
+          <div class="bubble bubble-left">¡Hola! Soy <b>Tildo</b>, la pelota más acentuada del campeonato. ¡Una tilde puede cambiarlo todo!</div>
+        </div>
+      </div>
+      <form id="login-form" class="login-card card3d" autocomplete="off" novalidate>
+        <h2>Ficha de jugador</h2>
+        <label class="field">
+          <span>Grado y división</span>
+          <input id="in-div" type="text" placeholder="4A o 4B" maxlength="4">
+        </label>
+        <label class="field">
+          <span>Nombre y apellido</span>
+          <input id="in-name" type="text" placeholder="Ej.: Sofía Pérez" maxlength="60">
+        </label>
+        <p id="login-error" class="form-error" role="alert"></p>
+        <button type="submit" class="btn btn-big">¡Entrar a la cancha! ⚽</button>
+        <button type="button" id="btn-teacher" class="link-btn">Panel docente</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- PANTALLA 2: MAPA DE PROGRESO -->
+  <section id="screen-map" class="screen">
+    <header class="topbar">
+      <div class="player-tag"><span class="avatar-mini" id="map-avatar"></span><div><b id="map-name"></b><small id="map-div"></small></div></div>
+      <h2 class="topbar-title">Mapa del campeonato</h2>
+      <div class="top-actions">
+        <button class="icon-btn" id="btn-mute-map" title="Sonido">🔊</button>
+        <button class="btn btn-ghost btn-sm" id="btn-logout">Salir</button>
+      </div>
+    </header>
+    <div class="map-intro">
+      <div id="map-mascot" class="mascot-mid"></div>
+      <div class="bubble bubble-left" id="map-bubble">Elegí el desafío. ¡Vamos paso a paso hasta la gran final!</div>
+    </div>
+    <div id="map-path" class="map-path"></div>
+  </section>
+
+  <!-- PANTALLA 3: ACTIVIDAD -->
+  <section id="screen-activity" class="screen">
+    <header class="topbar">
+      <button class="btn btn-ghost btn-sm" id="btn-to-map">🗺️ Mapa</button>
+      <div class="ch-tag" id="act-ch"></div>
+      <div class="dots" id="act-dots"></div>
+      <button class="icon-btn" id="btn-mute" title="Sonido">🔊</button>
+    </header>
+    <div class="act-layout">
+      <article class="act-card card3d">
+        <div class="act-head">
+          <span class="act-num" id="act-num"></span>
+          <h3 id="act-title"></h3>
+        </div>
+        <p class="act-prompt" id="act-prompt"></p>
+        <div id="act-body" class="act-body"></div>
+        <div class="act-foot">
+          <button class="btn btn-soft" id="btn-prev">◀ Anterior</button>
+          <span class="foot-space"></span>
+          <button class="btn" id="btn-confirm">Confirmar ✔</button>
+          <button class="btn btn-blue" id="btn-next">Siguiente ▶</button>
+        </div>
+      </article>
+      <aside class="act-side">
+        <div class="bubble bubble-down" id="act-bubble"></div>
+        <div id="act-mascot" class="mascot-mid"></div>
+        <div class="side-name">Tildo</div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- PANTALLA 4: PANEL DOCENTE -->
+  <section id="screen-teacher" class="screen">
+    <div class="teacher card3d">
+      <header class="teacher-head">
+        <h2>📋 Panel docente</h2>
+        <button class="btn btn-soft btn-sm" id="btn-teacher-back">Volver al juego</button>
+      </header>
+      <form id="teacher-form" class="teacher-form">
+        <label class="field"><span>Clave docente</span><input id="t-key" type="password" autocomplete="current-password"></label>
+        <label class="field"><span>División</span>
+          <select id="t-div"><option value="todas">4.º A y 4.º B</option><option value="4A">4.º A</option><option value="4B">4.º B</option></select>
+        </label>
+        <button class="btn btn-blue" type="submit">Ver resultados</button>
+        <button class="link-btn dark" type="button" id="btn-local">Ver datos guardados en esta computadora (modo prueba)</button>
+      </form>
+      <p id="t-msg" class="t-msg"></p>
+      <div id="t-results"></div>
+    </div>
+  </section>
+</main>
+
+<!-- CAPAS EMERGENTES -->
+<div id="overlay" class="overlay hidden"><div class="overlay-card card3d" id="overlay-card"></div></div>
+<div id="celebrate" class="celebrate hidden"><div class="cele-text" id="cele-text">¡Lo lograste!</div></div>
+<div id="toast" class="toast"></div>
+<canvas id="confetti"></canvas>
+
+<script src="script.js"></script>
+</body>
+</html>
